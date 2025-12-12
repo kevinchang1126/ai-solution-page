@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Nana Plugin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Existing Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Dialog specific animations */
+        .chat-enter {
+            animation: chatSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .chat-exit {
+            animation: chatSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes chatSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes chatSlideDown {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased text-slate-800">
+
+    <!-- ============================================== -->
+    <!-- IFRAME MODAL (Copied from index.html) -->
+    <!-- ============================================== -->
+    <div id="iframe-modal" class="fixed inset-0 z-[10000] hidden modal-enter">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity cursor-pointer"
+            onclick="closeModal()"></div>
+
+        <button onclick="closeModal()"
+            class="fixed top-5 right-5 z-[10001] p-2 text-white hover:text-cyan-400 bg-black/50 hover:bg-black/70 rounded-full transition-all backdrop-blur-sm border border-white/20 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div id="iframe-container"
+            class="absolute top-1/2 left-1/2 origin-center overflow-hidden bg-transparent transition-transform duration-300"
+            style="width: 1440px; height: 900px; border-radius: 12px;">
+            <iframe id="content-iframe" src="" class="w-full h-full border-0" title="Preview"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation"></iframe>
+        </div>
+    </div>
+
+    <!-- 
+      DEMO CONTENT
+      This is just to show that the page is independent. 
+      In a real plugin scenario, you would only copy the segments below into the target site.
+    -->
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-xl text-center space-y-4">
+            <h1 class="text-3xl font-bold text-slate-900">Floating Nana Demo</h1>
+            <p class="text-slate-600">
+                點擊右下角的娜娜頭像來開啟對話視窗。
+                <br>這是一個獨立的插件範例。
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ============================================== -->
+    <!-- FLOATING NANA PLUGIN START                     -->
+    <!-- ============================================== -->
+
+    <!-- 1. Chat Modal (Hidden by default) -->
+    <!-- 
+        Fixed position: bottom-24 right-6 
+        Size: w-96 (384px), h-[600px] 
+        Responsive: full screen on mobile (inset-0)
+    -->
+    <div id="nana-chat-modal" class="fixed bottom-24 right-6 w-96 h-[600px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-8rem)] 
+                bg-white rounded-2xl shadow-2xl border border-slate-200 z-[9999] 
+                hidden flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-white p-0.5 border border-blue-200 overflow-hidden shadow-sm">
+                        <img src="./assets/images/nana-animation.gif" alt="Nana"
+                            class="w-full h-full object-cover bg-indigo-50" />
+                    </div>
+                    <span
+                        class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-white rounded-full"></span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-white text-base">顧問娜娜</h3>
+                    <p class="text-blue-100 text-xs">企業 AI 解決方案專家</p>
+                </div>
+            </div>
+            <!-- Close Button -->
+            <button onclick="toggleChat()"
+                class="text-white/80 hover:text-white p-1 rounded-full hover:bg-white/10 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="chat-messages-main"
+            class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
+            <!-- JS will inject messages here -->
+        </div>
+
+        <!-- Suggestions Area -->
+        <div class="px-4 py-2 bg-slate-50 border-t border-slate-100 overflow-x-auto flex gap-2 no-scrollbar shrink-0">
+            <button onclick="sendPopupQuery('企業要如何發展AI')"
+                class="suggestion-btn whitespace-nowrap px-3 py-1 bg-white border border-slate-200 text-slate-600 rounded-full text-xs hover:bg-slate-100 transition">企業AI</button>
+            <button onclick="sendPopupQuery('企業為何重視AI的資安')"
+                class="suggestion-btn whitespace-nowrap px-3 py-1 bg-white border border-slate-200 text-slate-600 rounded-full text-xs hover:bg-slate-100 transition">企業資安</button>
+            <button onclick="sendPopupQuery('鼎新有哪些企業AI方案')"
+                class="suggestion-btn whitespace-nowrap px-3 py-1 bg-white border border-slate-200 text-slate-600 rounded-full text-xs hover:bg-slate-100 transition">鼎新方案</button>
+            <button onclick="sendPopupQuery('體驗企業AI助理')"
+                class="suggestion-btn whitespace-nowrap px-3 py-1 bg-cyan-50 border border-cyan-200 text-cyan-600 rounded-full text-xs hover:bg-cyan-100 transition">體驗企業助理</button>
+        </div>
+
+        <!-- Input Area -->
+        <form id="chat-form-popup" onsubmit="handlePopupSubmit(event)"
+            class="p-4 bg-white border-t border-slate-100 shrink-0">
+            <div class="flex gap-2">
+                <input type="text" id="chat-input-popup" placeholder="輸入您的訊息..."
+                    class="flex-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm disabled:bg-slate-100 disabled:cursor-not-allowed" />
+                <button type="submit"
+                    class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center hover:bg-blue-700 transition shadow-md shadow-blue-600/20 disabled:bg-slate-400 disabled:cursor-not-allowed">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m22 2-7 20-4-9-9-4Z" />
+                        <path d="M22 2 11 13" />
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 2. Floating Button -->
+    <div id="floating-chat-btn" class="fixed bottom-6 right-6 z-[9999] flex flex-col items-end gap-2">
+        <!-- Tooltip Bubble -->
+        <div id="nana-tooltip"
+            class="bg-white text-slate-700 px-4 py-2 rounded-xl shadow-lg border border-slate-100 text-sm font-medium mb-1 bubble-pulse relative cursor-pointer origin-bottom-right transition-opacity duration-300"
+            onclick="toggleChat()">
+            有問題可以問娜娜唷！
+            <div
+                class="absolute bottom-[-6px] right-6 w-3 h-3 bg-white border-b border-r border-slate-100 transform rotate-45">
+            </div>
+        </div>
+
+        <!-- Main Button -->
+        <button onclick="toggleChat()"
+            class="group relative w-16 h-16 transition-transform duration-300 hover:scale-110 flex items-center justify-center focus:outline-none">
+            <!-- Icon Image -->
+            <img src="./assets/images/nana-animation.gif" alt="Nana"
+                class="w-full h-full object-cover rounded-full relative z-10" />
+
+            <!-- Ping Animation -->
+            <span class="absolute top-0 right-0 flex h-4 w-4 z-20 -mt-1 -mr-1">
+                <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-white"></span>
+            </span>
+        </button>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- JAVASCRIPT LOGIC                               -->
+    <!-- ============================================== -->
+    <script>
+        // --- 1. State Management ---
+        function getPersistentSessionId() {
+            const STORAGE_KEY = 'digiwin_ai_user_uid';
+            let uid = localStorage.getItem(STORAGE_KEY);
+            if (!uid) {
+                uid = 'user_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem(STORAGE_KEY, uid);
+            }
+            return uid;
+        }
+
+        const chatState = {
+            messages: [{ id: 1, text: '嗨，我是娜娜！想了解企業運用 AI 的方法嗎？歡迎提出你對企業 AI 想了解的問題！', sender: 'bot' }],
+            loading: false,
+            sessionId: getPersistentSessionId(),
+            isOpen: false
+        };
+
+        const WEBHOOK_URL = "https://n8n-gateway.zeabur.app/ai-solution-agent";
+        const QUOTA_URL = "https://n8n-gateway.zeabur.app/ai-quota-check";
+
+        // --- 2. UI Toggle Logic ---
+        function toggleChat() {
+            const modal = document.getElementById('nana-chat-modal');
+            const tooltip = document.getElementById('nana-tooltip');
+
+            chatState.isOpen = !chatState.isOpen;
+
+            if (chatState.isOpen) {
+                // Open
+                modal.classList.remove('hidden');
+                modal.classList.remove('chat-exit');
+                modal.classList.add('chat-enter');
+                // Hide tooltip when open
+                if (tooltip) tooltip.classList.add('opacity-0', 'pointer-events-none');
+
+                // Focus input
+                setTimeout(() => {
+                    const input = document.getElementById('chat-input-popup');
+                    if (input) input.focus();
+                }, 300);
+
+                // Initial Scroll
+                const msgContainer = document.getElementById('chat-messages-main');
+                if (msgContainer) msgContainer.scrollTop = msgContainer.scrollHeight;
+
+            } else {
+                // Close
+                modal.classList.remove('chat-enter');
+                modal.classList.add('chat-exit');
+
+                // Wait for animation to finish then hide
+                modal.addEventListener('animationend', () => {
+                    if (!chatState.isOpen) {
+                        modal.classList.add('hidden');
+                    }
+                }, { once: true });
+
+                // Show tooltip again
+                if (tooltip) tooltip.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // --- 3. Chat Logic (Copied & Adapted) ---
+
+        // Render Chat
+        function renderChat() {
+            const el = document.getElementById('chat-messages-main');
+            if (!el) return;
+
+            el.innerHTML = '';
+
+            chatState.messages.forEach(msg => {
+                const isUser = msg.sender === 'user';
+                const wrapper = document.createElement('div');
+                wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+
+                let avatarHTML = '';
+                if (!isUser) {
+                    avatarHTML = `
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0 border border-blue-200 overflow-hidden">
+                       <img src="./assets/images/nana-icon.png" alt="Nana" class="w-full h-full object-cover bg-indigo-50" />
+                    </div>`;
+                }
+
+                let contentHTML = msg.text;
+                if (!isUser) {
+                    contentHTML = parseMarkdown(contentHTML);
+                }
+
+                wrapper.innerHTML = `
+                    ${avatarHTML}
+                    <div class="max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed shadow-sm prose-lite 
+                        ${isUser ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-slate-700 border border-slate-200 rounded-bl-none bot-msg'}">
+                        ${contentHTML}
+                    </div>
+                `;
+                el.appendChild(wrapper);
+            });
+
+            if (chatState.loading) {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = "flex justify-start";
+                loadingDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 border border-blue-200 overflow-hidden">
+                         <img src="./assets/images/nana-animation.gif" class="w-full h-full object-cover bg-indigo-50" />
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl rounded-bl-none border border-slate-200 shadow-sm flex gap-1 items-center">
+                        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+                    </div>
+                 `;
+                el.appendChild(loadingDiv);
+            }
+
+            requestAnimationFrame(() => {
+                el.scrollTop = el.scrollHeight;
+            });
+        }
+
+        // Send Query
+        async function sendPopupQuery(text) {
+            if (chatState.loading) return;
+            if (!text || !text.trim()) return;
+
+            // Add User Message
+            chatState.messages.push({ id: Date.now(), text: text, sender: 'user' });
+            chatState.loading = true;
+
+            updateInputState(true);
+            renderChat();
+
+            // Clear Input
+            const inputPopup = document.getElementById('chat-input-popup');
+            if (inputPopup) inputPopup.value = '';
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, chatInput: text, sessionId: chatState.sessionId }),
+                });
+
+                if (!response.ok) throw new Error(`Network error: ${response.status}`);
+
+                const data = await response.json();
+                let botText = getBotTextFromResponse(data);
+
+                if (!botText || botText === "{}") throw new Error("Empty response");
+
+                chatState.messages.push({ id: Date.now(), text: botText, sender: 'bot' });
+
+            } catch (error) {
+                console.log("Webhook failed", error);
+                await new Promise(r => setTimeout(r, 800)); // Fake delay
+                const fallback = "感謝您的詢問！目前連線較為繁忙，請稍後再試。";
+                chatState.messages.push({ id: Date.now(), text: fallback, sender: 'bot' });
+            } finally {
+                chatState.loading = false;
+                updateInputState(false);
+                renderChat();
+                updateQuotaDisplay();
+                // Focus back
+                if (inputPopup && window.innerWidth > 768) {
+                    inputPopup.focus();
+                }
+            }
+        }
+
+        function handlePopupSubmit(e) {
+            e.preventDefault();
+            const val = document.getElementById('chat-input-popup').value;
+            sendPopupQuery(val);
+        }
+
+        // Helper: Extract text from various response formats
+        function getBotTextFromResponse(data) {
+            if (typeof data === 'string') return data;
+            if (data.output) return data.output;
+            if (data.text) return data.text;
+            if (data.message) return data.message;
+            if (data.answer) return data.answer;
+            if (Array.isArray(data) && data.length > 0) {
+                return data[0].output || data[0].text || JSON.stringify(data);
+            }
+            return JSON.stringify(data);
+        }
+
+        // Helper: Update UI State
+        function updateInputState(isLoading) {
+            const input = document.getElementById('chat-input-popup');
+            const btn = document.querySelector('#chat-form-popup button[type="submit"]');
+
+            if (input) {
+                input.disabled = isLoading;
+                input.placeholder = isLoading ? "娜娜正在思考中..." : "輸入您的訊息...";
+            }
+            if (btn) btn.disabled = isLoading;
+        }
+
+        // Helper: Quota Check
+        async function updateQuotaDisplay() {
+            const input = document.getElementById('chat-input-popup');
+            if (!input) return;
+
+            try {
+                const response = await fetch(QUOTA_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: chatState.sessionId })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const remaining = data.remaining;
+                    input.placeholder = `輸入您的訊息... (今日剩餘: ${remaining})`;
+
+                    if (remaining <= 0) {
+                        input.disabled = true;
+                        input.placeholder = "今日額度已用完";
+                    }
+                }
+            } catch (e) {
+                // Silent fail
+            }
+        }
+
+        // Helper: Markdown Parser
+        function parseMarkdown(text) {
+            if (!text) return '';
+            let processed = text;
+
+            // Link Handling
+            processed = processed.replace(/(https?:\/\/[^\s"']+)/g, (url) => `[查看更多](${url})`);
+
+            if (typeof marked !== 'undefined') {
+                const renderer = new marked.Renderer();
+                renderer.link = (href, title, text) => {
+                    const safeHref = String(href || '');
+                    return `<a href="${safeHref}" target="_blank" class="text-blue-600 underline hover:text-blue-800">${text}</a>`;
+                };
+                try {
+                    return marked.parse(processed, { renderer });
+                } catch (e) { return text; }
+            }
+            return text;
+        }
+
+        // Init
+        document.addEventListener("DOMContentLoaded", function () {
+            renderChat();
+            updateQuotaDisplay();
+        });
+
+    </script>
+</body>
+
+</html>
