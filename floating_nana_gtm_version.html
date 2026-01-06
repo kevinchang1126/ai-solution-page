@@ -133,8 +133,8 @@
             // ========================================
             // 1. 全域變數
             // ========================================
-            var WEBHOOK_URL = "https://n8n-gateway.zeabur.app/ai-solution-agent";
-            var QUOTA_URL = "https://n8n-gateway.zeabur.app/ai-quota-check";
+            var WEBHOOK_URL = "https://digiwin.marketing/ai-solution-agent";
+            var QUOTA_URL = "https://digiwin.marketing/ai-quota-check";
             var STORAGE_KEY = 'digiwin_ai_user_uid';
 
             function getPersistentSessionId() {
@@ -199,7 +199,7 @@
                     method: 'POST',
                     mode: 'cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text, chatInput: text, sessionId: chatState.sessionId }),
+                    body: JSON.stringify({ message: text, sessionId: chatState.sessionId }),
                 })
                     .then(function (response) {
                         if (!response.ok) throw new Error('Network error');
