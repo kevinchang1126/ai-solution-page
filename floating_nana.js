@@ -341,33 +341,41 @@
             updateInputState(true);
             renderChat();
 
-            var inputPopup = document.getElementById('chat-input-popup');
-            if (inputPopup) inputPopup.value = '';
+            // 建立一個空的機器人對話框，準備接收逐字訊息
+            const botMsgId = Date.now() + 1;
+            let botFullText = "";
+            chatState.messages.push({ id: botMsgId, text: '', sender: 'bot' });
 
             fetch(WEBHOOK_URL, {
                 method: 'POST',
-                mode: 'cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, chatInput: text, sessionId: chatState.sessionId }),
+                body: JSON.stringify({ message: text, sessionId: chatState.sessionId }),
             })
-                .then(function (response) {
-                    if (!response.ok) throw new Error('Network error');
-                    return response.json();
-                })
-                .then(function (data) {
-                    var botText = getBotTextFromResponse(data);
-                    if (!botText || botText === "{}") throw new Error("Empty response");
-                    chatState.messages.push({ id: Date.now(), text: botText, sender: 'bot' });
+                .then(async (response) => {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+
+                        const chunk = decoder.decode(value, { stream: true });
+                        botFullText += chunk;
+
+                        // 更新畫面上特定對話框的內容
+                        const lastMsg = chatState.messages.find(m => m.id === botMsgId);
+                        if (lastMsg) {
+                            lastMsg.text = botFullText;
+                            renderChat(); // 這裡建議優化為局部更新，但先用 renderChat 測試效果
+                        }
+                    }
                     finishRequest();
                 })
-                .catch(function (error) {
-                    setTimeout(function () {
-                        chatState.messages.push({ id: Date.now(), text: getFallbackResponse(text), sender: 'bot' });
-                        finishRequest();
-                    }, 800);
+                .catch((error) => {
+                    console.error("Streaming error:", error);
+                    finishRequest();
                 });
         };
-
         window.handlePopupSubmit = function (e) {
             e.preventDefault();
             var val = document.getElementById('chat-input-popup').value;

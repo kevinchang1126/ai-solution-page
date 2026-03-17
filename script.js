@@ -91,8 +91,8 @@ async function updateQuotaDisplay() {
 }
 
 // --- 聊天邏輯 ---
-const WEBHOOK_URL = "https://n8n-gateway.zeabur.app/ai-solution-agent";
-const QUOTA_URL = "https://n8n-gateway.zeabur.app/ai-quota-check";
+const WEBHOOK_URL = "https://digiwin.marketing/ai-solution-agent";
+const QUOTA_URL = "https://digiwin.marketing/ai-quota-check";
 function getFallbackResponse(text) {
     const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
     if (!text) return "請告訴我更多細節。";
@@ -254,9 +254,8 @@ async function sendQuery(text) {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text, chatInput: text, sessionId: chatState.sessionId }),
+            body: JSON.stringify({ message: text, sessionId: chatState.sessionId, pageUrl: window.location.href }),
         });
-
         if (!response.ok) {
             if (response.status === 404) {
                 console.error('Webhook not found (404). Please ensure the N8N workflow is Active.');
