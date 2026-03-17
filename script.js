@@ -375,9 +375,12 @@ document.addEventListener("DOMContentLoaded", function () {
 // --- Modal Logic ---
 let currentScale = 1;
 let isPortraitMode = false;
+let isMobileAppMode = false;
 
-function openModal(url) {
+function openModal(url, mobileMode = false) {
     if (!url || typeof url !== 'string') return;
+    
+    isMobileAppMode = mobileMode;
 
     const modal = document.getElementById('iframe-modal');
     const iframe = document.getElementById('content-iframe');
@@ -398,6 +401,7 @@ function closeModal() {
     const iframe = document.getElementById('content-iframe');
     modal.classList.add('hidden');
     iframe.src = '';
+    isMobileAppMode = false;
     window.removeEventListener('resize', calculateModalLayout);
 }
 
@@ -407,11 +411,31 @@ function calculateModalLayout() {
 
     const w = window.innerWidth;
     const h = window.innerHeight;
+
+    if (isMobileAppMode) {
+        // 行動裝置比例 (例如 414x896)
+        container.style.width = '414px';
+        container.style.height = '896px';
+        container.style.borderRadius = '32px';
+
+        const scaleW = (w * 0.95) / 414;
+        const scaleH = (h * 0.95) / 896;
+        currentScale = Math.min(scaleW, scaleH, 1); // 不要放大超過原比例
+        
+        container.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+        return;
+    }
+
     const isMobile = w < 768 && h > w;
     isPortraitMode = isMobile;
 
     const baseWidth = 1440;
     const baseHeight = 900;
+    
+    container.style.width = '1440px';
+    container.style.height = '900px';
+    container.style.borderRadius = '12px';
+
     const availableW = isMobile ? h : w;
     const availableH = isMobile ? w : h;
 
