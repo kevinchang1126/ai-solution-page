@@ -207,3 +207,238 @@ body {
 .accordion-inner {
     min-height: 0;
 }
+
+/* ===== Event Section — Flowing Shimmer Border ===== */
+@keyframes eventShimmerLR {
+    0%   { background-position: -320px center; }
+    100% { background-position: calc(100% + 320px) center; }
+}
+@keyframes eventShimmerRL {
+    0%   { background-position: calc(100% + 320px) center; }
+    100% { background-position: -320px center; }
+}
+@keyframes eventShimmerTB {
+    0%   { background-position: center -320px; }
+    100% { background-position: center calc(100% + 320px); }
+}
+@keyframes eventShimmerBT {
+    0%   { background-position: center calc(100% + 320px); }
+    100% { background-position: center -320px; }
+}
+
+.event-shimmer-top,
+.event-shimmer-bottom {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0px,
+        rgba(34,211,238,0.2) 60px,
+        rgba(34,211,238,0.85) 110px,
+        rgba(255,255,255,1)   130px,
+        rgba(34,211,238,0.85) 150px,
+        rgba(34,211,238,0.2) 200px,
+        transparent 260px
+    );
+    background-size: 260px 100%;
+    background-repeat: no-repeat;
+    z-index: 20;
+    pointer-events: none;
+}
+.event-shimmer-top    { top: 0;    animation: eventShimmerLR 2.8s ease-in-out infinite; }
+.event-shimmer-bottom { bottom: 0; animation: eventShimmerRL 2.8s ease-in-out infinite; animation-delay: 1.4s; }
+
+.event-shimmer-left,
+.event-shimmer-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+        transparent 0px,
+        rgba(99,102,241,0.2) 60px,
+        rgba(99,102,241,0.85) 110px,
+        rgba(165,180,252,1)   130px,
+        rgba(99,102,241,0.85) 150px,
+        rgba(99,102,241,0.2) 200px,
+        transparent 260px
+    );
+    background-size: 100% 260px;
+    background-repeat: no-repeat;
+    z-index: 20;
+    pointer-events: none;
+}
+.event-shimmer-left  { left:  0; animation: eventShimmerTB 3.4s ease-in-out infinite; animation-delay: 0.7s; }
+.event-shimmer-right { right: 0; animation: eventShimmerBT 3.4s ease-in-out infinite; animation-delay: 2.1s; }
+
+/* Corner brackets */
+.event-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    pointer-events: none;
+    z-index: 21;
+}
+.event-corner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-style: solid;
+    border-color: rgba(34,211,238,0.75);
+    border-width: 0;
+}
+.event-corner-tl { top: 0; left: 0; }
+.event-corner-tl::before { border-top-width: 2px; border-left-width: 2px; }
+.event-corner-tr { top: 0; right: 0; }
+.event-corner-tr::before { border-top-width: 2px; border-right-width: 2px; border-color: rgba(34,211,238,0.75); }
+.event-corner-bl { bottom: 0; left: 0; }
+.event-corner-bl::before { border-bottom-width: 2px; border-left-width: 2px; border-color: rgba(99,102,241,0.75); }
+.event-corner-br { bottom: 0; right: 0; }
+.event-corner-br::before { border-bottom-width: 2px; border-right-width: 2px; border-color: rgba(99,102,241,0.75); }
+
+/* ===== Enterprise Digital Twin — Solar System ===== */
+@keyframes edtStarGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 35px  8px rgba(96,165,250,0.55),
+            0 0 70px  20px rgba(59,130,246,0.30),
+            0 0 120px 40px rgba(6,182,212,0.15);
+    }
+    50% {
+        box-shadow:
+            0 0 55px  15px rgba(96,165,250,0.75),
+            0 0 110px 35px rgba(59,130,246,0.45),
+            0 0 180px 60px rgba(6,182,212,0.25);
+    }
+}
+@keyframes edtRingSpin  { to { transform: translate(-50%,-50%) rotate(360deg);  } }
+@keyframes edtRingSpinR { to { transform: translate(-50%,-50%) rotate(-360deg); } }
+@keyframes edtPlanetFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+}
+
+.edt-star-orb {
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 36%,
+        #ffffff 0%, #bfdbfe 12%, #3b82f6 48%, #1e3a8a 78%, #0f172a 100%);
+    animation: edtStarGlow 3s ease-in-out infinite;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.edt-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%,-50%);
+}
+.edt-ring-1 {
+    width: 210px; height: 210px;
+    border: 1px dashed rgba(96,165,250,0.4);
+    animation: edtRingSpin 12s linear infinite;
+}
+.edt-ring-1::after {
+    content: '';
+    position: absolute;
+    top: -5px; left: calc(50% - 5px);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #60a5fa;
+    box-shadow: 0 0 8px 3px rgba(96,165,250,0.7);
+}
+.edt-ring-2 {
+    width: 290px; height: 290px;
+    border: 1px dashed rgba(6,182,212,0.25);
+    animation: edtRingSpinR 20s linear infinite;
+}
+.edt-ring-2::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 4px); right: -4px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #22d3ee;
+    box-shadow: 0 0 6px 2px rgba(6,182,212,0.7);
+}
+.edt-ring-3 {
+    width: 370px; height: 370px;
+    border: 1px dashed rgba(99,102,241,0.15);
+    animation: edtRingSpin 30s linear infinite;
+}
+.edt-ring-3::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: calc(50% - 4px);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #818cf8;
+    box-shadow: 0 0 6px 2px rgba(99,102,241,0.7);
+}
+
+.edt-planet-card {
+    background: rgba(6, 18, 42, 0.8);
+    border: 1px solid rgba(96,165,250,0.18);
+    border-radius: 20px;
+    padding: 28px 24px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+.edt-planet-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(96,165,250,0.6), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+.edt-planet-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+.edt-planet-card:hover {
+    border-color: rgba(96,165,250,0.45);
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(59,130,246,0.18), 0 0 0 1px rgba(96,165,250,0.1);
+}
+.edt-planet-card:hover::before,
+.edt-planet-card:hover::after { opacity: 1; }
+
+.edt-planet-orb {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    margin-bottom: 18px;
+    animation: edtPlanetFloat 5s ease-in-out infinite;
+    transition: all 0.4s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.edt-planet-orb-1 {
+    background: radial-gradient(circle at 36% 36%, #93c5fd, #3b82f6 55%, #1d4ed8 85%);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.45);
+    animation-delay: 0s;
+}
+.edt-planet-orb-2 {
+    background: radial-gradient(circle at 36% 36%, #67e8f9, #0891b2 55%, #164e63 85%);
+    box-shadow: 0 6px 20px rgba(8,145,178,0.45);
+    animation-delay: 1.7s;
+}
+.edt-planet-orb-3 {
+    background: radial-gradient(circle at 36% 36%, #c4b5fd, #7c3aed 55%, #4c1d95 85%);
+    box-shadow: 0 6px 20px rgba(124,58,237,0.45);
+    animation-delay: 3.4s;
+}
+.edt-planet-card:hover .edt-planet-orb { transform: scale(1.15); filter: brightness(1.2); }
+.edt-planet-card:hover .edt-planet-orb-1 { box-shadow: 0 10px 35px rgba(59,130,246,0.65); }
+.edt-planet-card:hover .edt-planet-orb-2 { box-shadow: 0 10px 35px rgba(8,145,178,0.65); }
+.edt-planet-card:hover .edt-planet-orb-3 { box-shadow: 0 10px 35px rgba(124,58,237,0.65); }
