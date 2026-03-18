@@ -119,6 +119,19 @@
     <!-- Event Section: AI EXPO Taiwan 2026 -->
     <section id="event"
         class="py-16 bg-gradient-to-br from-blue-700 via-indigo-700 to-blue-900 text-white relative overflow-hidden">
+
+        <!-- Flowing shimmer border lines -->
+        <div class="event-shimmer-top"></div>
+        <div class="event-shimmer-bottom"></div>
+        <div class="event-shimmer-left"></div>
+        <div class="event-shimmer-right"></div>
+
+        <!-- Corner bracket accents -->
+        <div class="event-corner event-corner-tl"></div>
+        <div class="event-corner event-corner-tr"></div>
+        <div class="event-corner event-corner-bl"></div>
+        <div class="event-corner event-corner-br"></div>
+
         <div class="absolute inset-0 pointer-events-none">
             <div
                 class="absolute top-0 left-0 w-80 h-80 rounded-full bg-cyan-400 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2">
@@ -200,6 +213,83 @@
         </div>
     </section>
 
+    <!-- Enterprise Digital Twin Section -->
+    <section id="enterprise-digital-twin" class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #020c1f 0%, #0d1f3c 50%, #020c1f 100%);">
+
+        <!-- Starfield + ambient glow -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.55) 1px,transparent 1px),radial-gradient(circle,rgba(255,255,255,0.3) 1px,transparent 1px);background-size:200px 200px,310px 310px;background-position:0 0,110px 90px;"></div>
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%, rgba(59,130,246,0.14) 0%, transparent 60%);"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Titles -->
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">員工數智分身延伸，企業智慧協作共生</h2>
+                <p class="text-base md:text-lg text-blue-200/75 max-w-3xl mx-auto leading-relaxed">數智分身不只是個人效率工具，更是企業跨組織協作的智慧樞紐。透過深度資料整合、重構繁瑣工作流程，讓 AI 承擔高重複性任務，使人力聚焦於高價值決策，驅動企業在瞬息萬變的市場中快速洞察、精準應對，邁向真正的數智驅動組織。</p>
+            </div>
+
+            <!-- Star / Solar system visual -->
+            <div class="flex justify-center mb-10">
+                <div class="relative" style="width:370px;height:370px;">
+                    <!-- Orbit rings with travelling dots -->
+                    <div class="edt-ring edt-ring-1"></div>
+                    <div class="edt-ring edt-ring-2"></div>
+                    <div class="edt-ring edt-ring-3"></div>
+                    <!-- Central star orb -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 edt-star-orb flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" stroke="none">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planet Cards -->
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+                <!-- Planet Card 1 — 數據密集整合 -->
+                <div class="edt-planet-card">
+                    <div class="edt-planet-orb edt-planet-orb-1">
+                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">數據密集整合</h3>
+                    <p class="text-blue-100/65 leading-relaxed text-sm">企業跨組織存取大量資料，透過完整整合與運用，將資料轉為企業營運與決策的核心依據。</p>
+                </div>
+
+                <!-- Planet Card 2 — 提升人員價值 -->
+                <div class="edt-planet-card">
+                    <div class="edt-planet-orb edt-planet-orb-2">
+                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="5"/>
+                            <path d="M20 21a8 8 0 1 0-16 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">提升人員價值</h3>
+                    <p class="text-blue-100/65 leading-relaxed text-sm">重構組織內繁瑣日常的任務，交棒給分身來作：如訂單變更判讀、急單識別處理，讓人力指揮 AI 提升價值。</p>
+                </div>
+
+                <!-- Planet Card 3 — 加速分析、提升決策品質 -->
+                <div class="edt-planet-card">
+                    <div class="edt-planet-orb edt-planet-orb-3">
+                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">加速分析、提升決策品質</h3>
+                    <p class="text-blue-100/65 leading-relaxed text-sm">市場變化快速，企業必須能立即從資料中萃取洞察，協助管理層做出更快、更準的營運判斷。</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- Why AI Section -->
     <section id="why-ai" class="py-20 bg-white text-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -239,68 +329,6 @@
                     <p class="text-slate-600 leading-relaxed">AI 能精準自動化執行多種重複性任務，如資料輸入、單據處理、報表彙整，讓人力從繁瑣作業中解放。</p>
                 </div>
                 <!-- Card 3 -->
-                <div
-                    class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:-translate-y-2">
-                    <div
-                        class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
-                        <svg class="text-indigo-600 group-hover:text-white transition-colors"
-                            xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                            <polyline points="17 6 23 6 23 12" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">加速分析、提升決策品質</h3>
-                    <p class="text-slate-600 leading-relaxed">市場變化快速，企業必須能立即從資料中萃取洞察，協助管理層做出更快、更準的營運判斷。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enterprise Digital Twin Section -->
-    <section id="enterprise-digital-twin" class="py-20 bg-slate-50 text-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-5">員工數智分身延伸，企業智慧協作共生</h2>
-                <h3 class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                    數智分身不只是個人效率工具，更是企業跨組織協作的智慧樞紐。透過深度資料整合、重構繁瑣工作流程，讓 AI
-                    承擔高重複性任務，使人力聚焦於高價值決策，驅動企業在瞬息萬變的市場中快速洞察、精準應對，邁向真正的數智驅動組織。</h3>
-                <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full mt-6"></div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Feature Card 1 -->
-                <div
-                    class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:-translate-y-2">
-                    <div
-                        class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors duration-300">
-                        <svg class="text-blue-600 group-hover:text-white transition-colors"
-                            xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <ellipse cx="12" cy="5" rx="9" ry="3" />
-                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">數據密集整合</h3>
-                    <p class="text-slate-600 leading-relaxed">企業跨組織存取大量資料，透過完整整合與運用，將資料轉為企業營運與決策的核心依據。</p>
-                </div>
-                <!-- Feature Card 2 -->
-                <div
-                    class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:-translate-y-2">
-                    <div
-                        class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-600 transition-colors duration-300">
-                        <svg class="text-cyan-600 group-hover:text-white transition-colors"
-                            xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <polyline points="16 11 18 13 22 9" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">提升人員價值</h3>
-                    <p class="text-slate-600 leading-relaxed">重構組織內繁瑣日常的任務，交棒給分身來作：如訂單變更判讀、急單識別處理，讓人力指揮 AI 提升價值。</p>
-                </div>
-                <!-- Feature Card 3 -->
                 <div
                     class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:-translate-y-2">
                     <div
