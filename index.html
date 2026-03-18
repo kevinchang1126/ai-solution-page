@@ -38,13 +38,14 @@
             <div class="flex justify-between h-16 items-center">
                 <a href="https://www.digiwin.com/tw" target="_blank"
                     class="flex-shrink-0 flex items-center gap-2 hover:opacity-80 transition">
-                    <img src="./assets/images/Datasys_logo.svg" alt="鼎新電腦 Digiwin" class="h-8 w-auto">
+                    <img src="https://static.digiwin.com.tw/upload/admin/20241122/767198509feb8ceee16567f0876e38fa.png"
+                        alt="鼎新電腦 Digiwin" class="h-8 w-auto">
                 </a>
                 <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToId('enterprise-digital-twin')"
+                        class="text-slate-600 hover:text-blue-600 transition">數智分身</button>
                     <button onclick="scrollToId('why-ai')"
                         class="text-slate-600 hover:text-blue-600 transition">轉型關鍵</button>
-                    <button onclick="scrollToId('solutions')"
-                        class="text-slate-600 hover:text-blue-600 transition">解決方案</button>
                     <button onclick="scrollToId('roadmap')"
                         class="text-slate-600 hover:text-blue-600 transition">轉型進程</button>
                     <button onclick="scrollToId('future')"
@@ -66,12 +67,14 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="scrollToId('enterprise-digital-twin')"
+                    class="block w-full text-left px-3 py-2 text-slate-600 font-medium">數智分身</button>
                 <button onclick="scrollToId('why-ai')"
                     class="block w-full text-left px-3 py-2 text-slate-600 font-medium">轉型關鍵</button>
-                <button onclick="scrollToId('solutions')"
-                    class="block w-full text-left px-3 py-2 text-slate-600 font-medium">解決方案</button>
                 <button onclick="scrollToId('roadmap')"
                     class="block w-full text-left px-3 py-2 text-slate-600 font-medium">轉型進程</button>
+                <button onclick="scrollToId('future')"
+                    class="block w-full text-left px-3 py-2 text-slate-600 font-medium">未來趨勢</button>
                 <button onclick="scrollToId('contact')"
                     class="w-full text-left bg-blue-50 text-blue-600 px-3 py-2 rounded-md font-medium mt-2">立即諮詢</button>
             </div>
@@ -99,7 +102,7 @@
                 <span>數智轉型．驅動企業AI</span>
             </div>
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-                企業數智分身<br /><span class="text-shimmer">以數據所驅動可信賴企業AI</span></h1>
+                企業數智分身<br /><span class="text-shimmer">以數據所驅動的可信賴企業AI</span></h1>
             <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-300 mb-10 text-shadow-sm">從自動化到智慧決策，鼎新協助企業構建專屬的 AI
                 大腦，讓數據成為真正的競爭力。</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
@@ -160,25 +163,28 @@
                     </h2>
                     <p class="text-white/90 text-base mb-4 max-w-lg mx-auto lg:mx-0">邀您體驗企業級 AI，數智分身改變未來企業工作樣貌！</p>
                     <div
-                        class="flex items-start gap-3 bg-white/10 border border-white/20 rounded-2xl px-5 py-4 mb-7 max-w-lg mx-auto lg:mx-0 backdrop-blur-sm">
-                        <svg class="text-yellow-300 flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="22"
-                            height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <polygon
-                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                        <p class="text-white/90 text-sm leading-relaxed">玩小遊戲，在 AI EXPO 展會期間，至會場與我們兌換限量贈品！</p>
+                        class="bg-white/10 border border-white/20 rounded-2xl p-6 mb-7 max-w-xl mx-auto lg:mx-0 backdrop-blur-sm flex flex-col sm:flex-row items-center gap-5 justify-between">
+                        <div class="flex items-start gap-3 text-left">
+                            <svg class="text-yellow-300 flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg"
+                                width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg>
+                            <p class="text-white/90 text-sm leading-relaxed">體驗數智分身小遊戲，在 AI EXPO 展期間，到現場可以兌換限量贈品！</p>
+                        </div>
+                        <a href="https://event.digiwin.com/agentic-ai-intelligent-rpg" target="_blank"
+                            onclick="event.preventDefault(); openModal('https://event.digiwin.com/agentic-ai-intelligent-rpg', true)"
+                            class="flex-shrink-0 w-full sm:w-auto inline-flex justify-center items-center gap-2 px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-blue-900 font-bold text-base rounded-full transition shadow-lg shadow-cyan-400/30">
+                            立即開玩
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
+                            </svg>
+                        </a>
                     </div>
-                    <a href="https://event.digiwin.com/agentic-ai-intelligent-rpg" target="_blank"
-                        onclick="event.preventDefault(); openModal('https://event.digiwin.com/agentic-ai-intelligent-rpg', true)"
-                        class="inline-flex items-center gap-2 px-8 py-4 bg-cyan-400 hover:bg-cyan-300 text-blue-900 font-bold text-lg rounded-full transition shadow-lg shadow-cyan-400/30">
-                        立即開玩
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                        </svg>
-                    </a>
                 </div>
                 <!-- Event Visual -->
                 <div class="flex-shrink-0 flex flex-col items-center gap-4">
@@ -214,12 +220,17 @@
     </section>
 
     <!-- Enterprise Digital Twin Section -->
-    <section id="enterprise-digital-twin" class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #020c1f 0%, #0d1f3c 50%, #020c1f 100%);">
+    <section id="enterprise-digital-twin" class="relative py-20 overflow-hidden"
+        style="background: linear-gradient(135deg, #020c1f 0%, #0d1f3c 50%, #020c1f 100%);">
 
         <!-- Starfield + ambient glow -->
         <div class="absolute inset-0 pointer-events-none">
-            <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.55) 1px,transparent 1px),radial-gradient(circle,rgba(255,255,255,0.3) 1px,transparent 1px);background-size:200px 200px,310px 310px;background-position:0 0,110px 90px;"></div>
-            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%, rgba(59,130,246,0.14) 0%, transparent 60%);"></div>
+            <div
+                style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.55) 1px,transparent 1px),radial-gradient(circle,rgba(255,255,255,0.3) 1px,transparent 1px);background-size:200px 200px,310px 310px;background-position:0 0,110px 90px;">
+            </div>
+            <div
+                style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%, rgba(59,130,246,0.14) 0%, transparent 60%);">
+            </div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -227,7 +238,9 @@
             <!-- Titles -->
             <div class="text-center mb-10">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">員工數智分身延伸，企業智慧協作共生</h2>
-                <p class="text-base md:text-lg text-blue-200/75 max-w-3xl mx-auto leading-relaxed">數智分身不只是個人效率工具，更是企業跨組織協作的智慧樞紐。透過深度資料整合、重構繁瑣工作流程，讓 AI 承擔高重複性任務，使人力聚焦於高價值決策，驅動企業在瞬息萬變的市場中快速洞察、精準應對，邁向真正的數智驅動組織。</p>
+                <p class="text-base md:text-lg text-blue-200/75 max-w-3xl mx-auto leading-relaxed">
+                    數智分身不只是個人效率工具，更是企業跨組織協作的智慧樞紐。透過深度資料整合、重構繁瑣工作流程，讓 AI
+                    承擔高重複性任務，使人力聚焦於高價值決策，驅動企業在瞬息萬變的市場中快速洞察、精準應對，邁向真正的數智驅動組織。</p>
             </div>
 
             <!-- Star / Solar system visual -->
@@ -238,9 +251,12 @@
                     <div class="edt-ring edt-ring-2"></div>
                     <div class="edt-ring edt-ring-3"></div>
                     <!-- Central star orb -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 edt-star-orb flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" stroke="none">
-                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 edt-star-orb flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                            fill="rgba(255,255,255,0.85)" stroke="none">
+                            <path
+                                d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
                         </svg>
                     </div>
                 </div>
@@ -252,10 +268,12 @@
                 <!-- Planet Card 1 — 數據密集整合 -->
                 <div class="edt-planet-card">
                     <div class="edt-planet-orb edt-planet-orb-1">
-                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3" />
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">數據密集整合</h3>
@@ -265,21 +283,26 @@
                 <!-- Planet Card 2 — 提升人員價值 -->
                 <div class="edt-planet-card">
                     <div class="edt-planet-orb edt-planet-orb-2">
-                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="8" r="5"/>
-                            <path d="M20 21a8 8 0 1 0-16 0"/>
+                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="5" />
+                            <path d="M20 21a8 8 0 1 0-16 0" />
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">提升人員價值</h3>
-                    <p class="text-blue-100/65 leading-relaxed text-sm">重構組織內繁瑣日常的任務，交棒給分身來作：如訂單變更判讀、急單識別處理，讓人力指揮 AI 提升價值。</p>
+                    <p class="text-blue-100/65 leading-relaxed text-sm">重構組織內繁瑣日常的任務，交棒給分身來作：如訂單變更判讀、急單識別處理，讓人力指揮 AI
+                        提升價值。</p>
                 </div>
 
                 <!-- Planet Card 3 — 加速分析、提升決策品質 -->
                 <div class="edt-planet-card">
                     <div class="edt-planet-orb edt-planet-orb-3">
-                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                            <polyline points="17 6 23 6 23 12"/>
+                        <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                            <polyline points="17 6 23 6 23 12" />
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">加速分析、提升決策品質</h3>
@@ -344,56 +367,77 @@
                     <p class="text-slate-600 leading-relaxed">市場變化快速，企業必須能立即從資料中萃取洞察，協助管理層做出更快、更準的營運判斷。</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Solutions & Chatbot Section -->
-    <section id="solutions" class="py-20 bg-white text-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div>
+            <!-- Solutions Container (Merged from previous single section) -->
+            <div id="solutions"
+                class="mt-20 p-8 md:p-12 bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-3xl border border-slate-200 shadow-inner relative overflow-hidden">
+                <!-- Decorative background elements -->
+                <div
+                    class="absolute top-0 right-0 w-80 h-80 bg-blue-200 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2 pointer-events-none">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-80 h-80 bg-cyan-200 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2 pointer-events-none">
+                </div>
 
-                <!-- Solution Links -->
-                <div class="space-y-8">
-                    <div class="mb-8">
-                        <h2 class="text-3xl font-bold text-slate-900 mb-4">企業 AI 解決方案</h2>
-                        <p class="text-lg text-slate-600">了解多樣化AI在企業不同場景中的運用。</p>
-                    </div>
-                    <!-- Link 1 -->
+                <div class="text-center mb-10 relative z-10">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">企業 AI 解決方案</h2>
+                    <p class="text-lg text-slate-600">了解多樣化AI在企業不同場景中的運用。</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 relative z-10">
+                    <!-- Solution Link 1 -->
                     <a href="https://www.digiwin.com/tw/dsc/METIS/ChatFile/index.html" target="_blank"
-                        class="block group">
+                        class="block group h-full">
                         <div
-                            class="flex items-center p-6 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all">
+                            class="h-full flex flex-col items-center p-8 bg-white rounded-2xl border-2 border-slate-100 hover:border-blue-400 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
                             <div
-                                class="flex-shrink-0 w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-6 group-hover:bg-blue-100 transition">
-                                <svg class="text-blue-600" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                class="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+
+                            <div
+                                class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors duration-300 relative z-10">
+                                <svg class="text-blue-600 group-hover:text-white transition-colors"
+                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                 </svg>
                             </div>
-                            <div class="flex-grow">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition">企業知識助理
-                                    ChatFile</h3>
-                                <p class="text-slate-500 mt-1">喚醒沉睡的文件知識，即問即答，知識傳承零時差。</p>
-                            </div>
-                            <div class="flex-shrink-0 ml-4"><svg class="text-slate-300 group-hover:text-blue-600"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            <h3
+                                class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition relative z-10 text-center mb-3">
+                                企業知識助理 ChatFile</h3>
+                            <p class="text-slate-500 text-center flex-grow relative z-10 mb-6">喚醒沉睡的文件知識，即問即答，知識傳承零時差。
+                            </p>
+
+                            <div
+                                class="mt-auto inline-flex items-center justify-center w-full px-6 py-3 bg-blue-50 text-blue-600 rounded-xl font-bold group-hover:bg-blue-600 group-hover:text-white transition-colors relative z-10">
+                                了解更多
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
-                                    <path d="m9 18 6-6-6-6" />
-                                </svg></div>
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </div>
                         </div>
                     </a>
-                    <!-- Link 2 -->
+
+                    <!-- Solution Link 2 -->
                     <a href="https://www.digiwin.com/tw/dsc/METIS/AIassist/index.html" target="_blank"
-                        class="block group">
+                        class="block group h-full">
                         <div
-                            class="flex items-center p-6 bg-white rounded-2xl border border-slate-200 hover:border-cyan-400 hover:shadow-lg transition-all">
+                            class="h-full flex flex-col items-center p-8 bg-white rounded-2xl border-2 border-slate-100 hover:border-cyan-400 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
                             <div
-                                class="flex-shrink-0 w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mr-6 group-hover:bg-cyan-100 transition">
-                                <svg class="text-cyan-600" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                class="absolute inset-0 bg-gradient-to-b from-cyan-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+
+                            <div
+                                class="w-20 h-20 bg-cyan-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-cyan-600 transition-colors duration-300 relative z-10">
+                                <svg class="text-cyan-600 group-hover:text-white transition-colors"
+                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <path d="M12 8V4H8" />
                                     <rect width="16" height="12" x="4" y="8" rx="2" />
                                     <path d="M2 14h2" />
@@ -402,29 +446,41 @@
                                     <path d="M9 13v2" />
                                 </svg>
                             </div>
-                            <div class="flex-grow">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-cyan-600 transition">體驗企業
-                                    AI 助理場景</h3>
-                                <p class="text-slate-500 mt-1">針對採購、生管、財務等場景的專屬助理，工作效率倍增。</p>
-                            </div>
-                            <div class="flex-shrink-0 ml-4"><svg class="text-slate-300 group-hover:text-cyan-600"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            <h3
+                                class="text-xl font-bold text-slate-900 group-hover:text-cyan-600 transition relative z-10 text-center mb-3">
+                                體驗企業 AI 助理場景</h3>
+                            <p class="text-slate-500 text-center flex-grow relative z-10 mb-6">
+                                針對採購、生管、財務等場景的專屬助理，工作效率倍增。</p>
+
+                            <div
+                                class="mt-auto inline-flex items-center justify-center w-full px-6 py-3 bg-cyan-50 text-cyan-600 rounded-xl font-bold group-hover:bg-cyan-600 group-hover:text-white transition-colors relative z-10">
+                                了解更多
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
-                                    <path d="m9 18 6-6-6-6" />
-                                </svg></div>
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </div>
                         </div>
                     </a>
-                    <!-- Link 3 -->
+
+                    <!-- Solution Link 3 -->
                     <a href="https://www.digiwin.com/tw/dsc/project/ai-solution/private-ai.html" target="_blank"
-                        class="block group">
+                        class="block group h-full">
                         <div
-                            class="flex items-center p-6 bg-white rounded-2xl border border-slate-200 hover:border-indigo-400 hover:shadow-lg transition-all">
+                            class="h-full flex flex-col items-center p-8 bg-white rounded-2xl border-2 border-slate-100 hover:border-indigo-400 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
                             <div
-                                class="flex-shrink-0 w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mr-6 group-hover:bg-indigo-100 transition">
-                                <svg class="text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                class="absolute inset-0 bg-gradient-to-b from-indigo-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+
+                            <div
+                                class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300 relative z-10">
+                                <svg class="text-indigo-600 group-hover:text-white transition-colors"
+                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <rect width="16" height="16" x="4" y="4" rx="2" />
                                     <rect width="6" height="6" x="9" y="9" rx="1" />
                                     <path d="M15 2v2" />
@@ -437,17 +493,23 @@
                                     <path d="M9 20v2" />
                                 </svg>
                             </div>
-                            <div class="flex-grow">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition">企業
-                                    AI 私有化部署方案</h3>
-                                <p class="text-slate-500 mt-1">數據不出門，安全有保障。打造企業專屬的私有化大模型。</p>
-                            </div>
-                            <div class="flex-shrink-0 ml-4"><svg class="text-slate-300 group-hover:text-indigo-600"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            <h3
+                                class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition relative z-10 text-center mb-3">
+                                企業 AI 私有化部署方案</h3>
+                            <p class="text-slate-500 text-center flex-grow relative z-10 mb-6">
+                                數據不出門，安全有保障。打造企業專屬的私有化大模型。</p>
+
+                            <div
+                                class="mt-auto inline-flex items-center justify-center w-full px-6 py-3 bg-indigo-50 text-indigo-600 rounded-xl font-bold group-hover:bg-indigo-600 group-hover:text-white transition-colors relative z-10">
+                                了解更多
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
-                                    <path d="m9 18 6-6-6-6" />
-                                </svg></div>
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -554,10 +616,10 @@
                             <div
                                 class="accordion-inner bg-white p-6 rounded-2xl border-2 border-blue-700 shadow-xl relative overflow-hidden mb-2">
                                 <h3 class="text-2xl font-bold text-slate-900 mb-1">數智驅動企業 <span
-                                        class="text-blue-600">AI引領企業決策</span></h3>
+                                        class="text-blue-600">數智分身協助決策</span></h3>
                                 <div class="my-4 h-px bg-slate-100"></div>
-                                <p class="text-slate-600 leading-relaxed mb-6">多數工作都已能自動化運作，系統成為底層數據基礎，透過多智能體平台，由 AI
-                                    Agent 代理調度各種任務。</p>
+                                <p class="text-slate-600 leading-relaxed mb-6">
+                                    多數工作都已能自動化運作，系統成為底層數據基礎，人透過多智能體平台執行任務，數智分身代理多種職能任務。</p>
                                 <a href="#future" onclick="event.preventDefault(); scrollToId('future')"
                                     class="inline-flex items-center text-blue-600 font-semibold hover:underline">
                                     了解多智能體平台
@@ -636,9 +698,9 @@
             <div class="flex flex-col lg:flex-row gap-16 items-center mb-24">
                 <div class="lg:w-1/2">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">企業 AI Agent 的趨勢<br /><span
-                            class="text-blue-600">發展多智能體運行平台</span></h2>
-                    <p class="text-lg text-slate-600 mb-8">企業將從單純的「AI 助理」進化至「多 Agent 協作」模式。工作任務不再僅依賴人工確認，而是由 Agent
-                        自主指揮調度完成，形成企業營運智慧閉環。</p>
+                            class="text-blue-600">多智能體運行平台</span></h2>
+                    <p class="text-lg text-slate-600 mb-8">單點的「AI 助理」將進化為「多 Agent 協作」模式。具備不同職能技能的「數智分身」由指揮官 Agent
+                        調度，自主完成任務，形成企業智慧運營。</p>
                     <div class="space-y-6">
                         <div class="flex gap-4">
                             <div
@@ -654,7 +716,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-slate-900">P-Agent（任務指揮官）</h3>
-                                <p class="text-slate-600 mt-1">負責策略判斷、任務拆解、流程規劃。決定「要做什麼」與「怎麼做」，是企業的智慧決策中樞。</p>
+                                <p class="text-slate-600 mt-1">接收人的策略指令，負責任務拆解、任務分派與執行。決定「要做什麼」與「怎麼做」，是企業的智慧決策中樞。</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
@@ -667,8 +729,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-slate-900">A-Agent（職能分身）</h3>
-                                <p class="text-slate-600 mt-1">執行各式企業任務：生單、比對、報表、資料讀取。完成 P-Agent 分派的工作並回傳結果。</p>
+                                <h3 class="text-xl font-bold text-slate-900">A-Agent（職能數智分身）</h3>
+                                <p class="text-slate-600 mt-1">
+                                    具備各種職能技能：如採購分析成本、生管制定排程、物控管理物料庫存、財務會計每月成本核算...。接受P-Agent分派的工作並執行。</p>
                             </div>
                         </div>
                     </div>
@@ -757,20 +820,37 @@
             <!-- Part 2: Platform Description with Video -->
             <div class="flex flex-col lg:flex-row gap-16 items-center">
                 <div class="lg:w-1/2 w-full relative flex justify-center order-2 lg:order-1">
-                    <div id="mockup-container" 
+                    <div id="mockup-container"
                         class="w-full max-w-[360px] h-[650px] shadow-2xl rounded-[32px] overflow-hidden border-[8px] border-slate-100 bg-white relative">
                         <!-- mockup.js 將掛載於此 -->
                         <style>
                             /* 強制顯示切換標籤讓使用者可以在網頁直接互動，取代原本預設的隱藏 */
-                            #mockup-container .mk-scenario-tabs { display: flex !important; margin-bottom: 0; }
+                            #mockup-container .mk-scenario-tabs {
+                                display: flex !important;
+                                margin-bottom: 0;
+                            }
                         </style>
                     </div>
                 </div>
 
                 <div class="lg:w-1/2 order-1 lg:order-2">
-                    <h3 class="text-3xl font-bold text-blue-600 mb-6">了解多智能體運行平台</h3>
+                    <h3 class="text-3xl font-bold text-blue-600 mb-4">數智分身在多智能體運行平台的運作樣貌</h3>
+
+                    <!-- 職能標籤 -->
+                    <div class="flex flex-wrap items-center gap-2 mb-6 text-sm">
+                        <span class="text-slate-600 font-medium mr-1">數智分身調用了那些職能技能：</span>
+                        <span
+                            class="px-3 py-1 bg-cyan-50 text-cyan-700 border border-cyan-100 rounded-full font-medium">業務</span>
+                        <span
+                            class="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-100 rounded-full font-medium">採購</span>
+                        <span
+                            class="px-3 py-1 bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-full font-medium">生產管理</span>
+                        <span
+                            class="px-3 py-1 bg-sky-50 text-sky-700 border border-sky-100 rounded-full font-medium">物料控管</span>
+                    </div>
+
                     <p class="text-lg text-slate-600 leading-relaxed text-justify">
-                        以企業系統數據資料為基底，驅動 AI Agent 理解需求，並自主調度資源完成複雜任務，AI Agent 每次執行的任務
+                        以企業系統數據資料為基底，使用者下達任務給數智分身，數智分身理解需求，並自主調度資源完成任務，數智分身每次執行的任務
                         <span class="font-bold text-blue-600">可檢核、可解釋、可信賴</span>，
                         任務關鍵決策再交由人員檢核放行，讓人不再埋首複雜的執行工作，有感提升企業營運競爭力。
                     </p>
