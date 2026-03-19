@@ -41,275 +41,7 @@ function switchRoadmap(index) {
     }
 }
 
-function getPersistentSessionId() {
-    const STORAGE_KEY = 'digiwin_ai_user_uid'; // 定義儲存的 key
-    let uid = localStorage.getItem(STORAGE_KEY);
-    if (!uid) {
-        uid = 'user_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem(STORAGE_KEY, uid);
-    }
-    return uid;
-}
 
-// 狀態變數
-const chatState = {
-    messages: [{ id: 1, text: '嗨，我是娜娜！想了解企業運用 AI 的方法嗎？歡迎提出你對企業 AI 想了解的問題！', sender: 'bot' }],
-    loading: false,
-    sessionId: getPersistentSessionId()
-};
-// 更新 UI 上的額度顯示
-async function updateQuotaDisplay() {
-    const input = document.getElementById('chat-input-main');
-    if (!input) return;
-
-    try {
-        const response = await fetch(QUOTA_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                sessionId: chatState.sessionId
-            })
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            const remaining = data.remaining;
-            // ✅ 更新 Placeholder
-            input.placeholder = `輸入您的訊息... (今日剩餘額度: ${remaining}/20)`;
-
-            // 如果沒額度了，直接鎖定輸入框
-            if (remaining <= 0) {
-                input.disabled = true;
-                input.placeholder = "今日額度已用完";
-                const btn = document.querySelector('#chat-form-main button[type="submit"]');
-                if (btn) btn.disabled = true;
-            }
-        }
-    } catch (e) {
-        console.error("無法取得額度", e);
-    }
-}
-
-// --- 聊天邏輯 ---
-const WEBHOOK_URL = "https://digiwin.marketing/ai-solution-agent";
-const QUOTA_URL = "https://digiwin.marketing/ai-quota-check";
-function getFallbackResponse(text) {
-    const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    if (!text) return "請告訴我更多細節。";
-
-    if (text.includes("企業要如何發展AI") || text.includes("發展AI")) {
-        return randomPick([
-            "企業發展 AI 的關鍵在於「數據驅動」與「場景落地」。建議從盤點企業內部的數據資產開始，並選擇高重複性、高價值的流程進行 AI 試點。若需要專業評估，歡迎點擊 [進一步諮詢](#contact)。",
-            "發展 AI 需要三個要素：算力、演算法與數據。對於企業而言，最重要的是找到合適的應用場景，例如智慧客服、自動化報表等。鼎新能協助您快速佈署，詳情請參考 [進一步諮詢](#contact)。"
-        ]);
-    }
-    if (text.includes("企業為何重視AI的資安") || text.includes("資安")) {
-        return randomPick([
-            "AI 雖然強大，但若將機密數據上傳至公有雲，可能面臨外洩風險。因此，企業級 AI 必須重視「私有化部署」與「權限控管」，確保數據不出門。想了解安全的 AI 方案，請點擊 [進一步諮詢](#contact)。",
-            "資安是 AI 應用的基石。未經保護的 AI 模型可能會被惡意攻擊或竊取知識。鼎新的方案特別強調企業數據的隔離與加密。更多細節歡迎 [進一步諮詢](#contact)。"
-        ]);
-    }
-    if (text.includes("鼎新有哪些企業AI方案") || text.includes("方案")) {
-        return randomPick([
-            "鼎新提供全方位的企業 AI 方案，包括：\n1. **ChatFile**：企業知識助理，解決文件檢索難題。\n2. **AI 助理**：針對採購、生管等場景的專屬助理。\n3. **企業AI私有化**：一站式企業AI解決方案\n\n想深入了解哪一項呢？或直接 [進一步諮詢](#contact)。",
-            "我們針對不同階段的企業提供對應方案：\n- L1 數位化：ERP + 流程自動化\n- L2 智慧化：AI 助理協助庶務\n- L3/L4 數智驅動：P-Agent 決策中樞\n\n想知道您的企業適合哪個階段？歡迎 [進一步諮詢](#contact)。"
-        ]);
-    }
-    if (text.includes("體驗")) {
-        return "沒問題，這是一個我們 AI 助理的實際操作展示：[立即體驗](https://www.digiwin.com/tw/dsc/METIS/AIassist/Demo/Demo_B.html?iframe=true)";
-    }
-
-    return "感謝您的詢問！由於目前連線較為繁忙，我暫時無法連接到雲端大腦。\n\n不過，針對您的企業轉型需求，我們建議您可以先評估目前的數位化成熟度。若希望能有專人為您詳細規劃，歡迎點擊 [進一步諮詢](#contact) 留下您的聯絡方式。";
-}
-
-// 渲染聊天訊息
-function renderChat() {
-    const el = document.getElementById('chat-messages-main');
-    if (!el) return;
-
-    el.innerHTML = '';
-
-    chatState.messages.forEach(msg => {
-        const isUser = msg.sender === 'user';
-        const wrapper = document.createElement('div');
-        wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
-
-        let avatarHTML = '';
-        if (!isUser) {
-            avatarHTML = `
-            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0 border border-blue-200 overflow-hidden">
-               <img src="https://event.digiwin.com/hubfs/%E5%A8%9C%E5%A8%9CQ%E5%9C%96_%E7%84%A1%E5%BA%95%E5%9C%96.png" alt="Nana" class="w-full h-full object-cover bg-indigo-50" />
-            </div>`;
-        }
-
-        let contentHTML = msg.text;
-        if (!isUser) {
-            contentHTML = parseMarkdown(contentHTML);
-        }
-
-        wrapper.innerHTML = `
-            ${avatarHTML}
-            <div class="max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed shadow-sm prose-lite ${isUser ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-slate-700 border border-slate-200 rounded-bl-none bot-msg'}">
-                ${contentHTML}
-            </div>
-        `;
-        el.appendChild(wrapper);
-    });
-
-    if (chatState.loading) {
-        const loadingDiv = document.createElement('div');
-        loadingDiv.className = "flex justify-start";
-        loadingDiv.innerHTML = `
-            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 border border-blue-200 overflow-hidden">
-                 <img src="https://event.digiwin.com/hubfs/%E5%A8%9C%E5%A8%9CQ%E5%9C%96_%E7%84%A1%E5%BA%95%E5%9C%96.png" class="w-full h-full object-cover bg-indigo-50" />
-            </div>
-            <div class="bg-white p-4 rounded-2xl rounded-bl-none border border-slate-200 shadow-sm flex gap-1 items-center">
-                <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-            </div>
-         `;
-        el.appendChild(loadingDiv);
-    }
-
-    requestAnimationFrame(() => {
-        el.scrollTop = el.scrollHeight;
-    });
-}
-
-// Markdown 解析
-function parseMarkdown(text) {
-    if (!text) return '';
-    let processed = text;
-
-    const placeholders = [];
-    processed = processed.replace(/(\[[^\]]*\]\([^)]*\)|href=["'][^"']*["'])/g, (match) => {
-        placeholders.push(match);
-        return `__PLACEHOLDER_${placeholders.length - 1}__`;
-    });
-
-    processed = processed.replace(/(https?:\/\/[^\s"']+)/g, (url) => `[查看更多](${url})`);
-    processed = processed.replace(/__PLACEHOLDER_(\d+)__/g, (_, index) => placeholders[index]);
-    processed = processed.replace(/\[(進一步諮詢|與我們聯繫|向我們諮詢)\](?!\()/g, `[$1](#contact)`);
-
-    if (typeof marked !== 'undefined') {
-        const renderer = new marked.Renderer();
-        renderer.link = (href, title, text) => {
-            const safeHref = String(href || '');
-            const isIframe = safeHref.includes('iframe=true');
-
-            if (isIframe) {
-                return `<a href="${safeHref}" data-iframe="true" onclick="event.preventDefault(); openModal('${safeHref}')" title="在視窗中開啟">${text}</a>`;
-            }
-            if (safeHref.startsWith('#')) {
-                const targetId = safeHref.substring(1);
-                return `<a href="${safeHref}" onclick="event.preventDefault(); scrollToId('${targetId}')">${text}</a>`;
-            }
-            return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer">${text}</a>`;
-        };
-        try {
-            return marked.parse(processed, { renderer });
-        } catch (e) {
-            return text;
-        }
-    }
-    return processed;
-}
-
-// 鎖定/解鎖 UI 狀態
-function updateInputState(isLoading) {
-    const input = document.getElementById('chat-input-main');
-    const btn = document.querySelector('#chat-form-main button[type="submit"]');
-    const suggestions = document.querySelectorAll('.suggestion-btn');
-
-    if (input) {
-        input.disabled = isLoading;
-        input.placeholder = isLoading ? "娜娜正在思考中..." : "輸入您的訊息...";
-    }
-    if (btn) {
-        btn.disabled = isLoading;
-    }
-
-    suggestions.forEach(s => {
-        s.disabled = isLoading;
-    });
-}
-
-// 發送訊息
-async function sendQuery(text) {
-    // 防止重複送出
-    if (chatState.loading) return;
-    if (!text || !text.trim()) return;
-
-    chatState.messages.push({ id: Date.now(), text: text, sender: 'user' });
-    chatState.loading = true;
-
-    // 立即更新 UI 為鎖定狀態
-    updateInputState(true);
-    renderChat();
-
-    const inputMain = document.getElementById('chat-input-main');
-    if (inputMain) inputMain.value = '';
-
-    try {
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text, sessionId: chatState.sessionId, pageUrl: window.location.href }),
-        });
-        if (!response.ok) {
-            if (response.status === 404) {
-                console.error('Webhook not found (404). Please ensure the N8N workflow is Active.');
-            }
-            throw new Error(`Network error: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        let botText = "";
-        if (typeof data === 'string') {
-            botText = data;
-        } else if (data.output) {
-            botText = data.output;
-        } else if (data.text) {
-            botText = data.text;
-        } else if (data.message) {
-            botText = data.message;
-        } else if (data.answer) {
-            botText = data.answer;
-        } else if (Array.isArray(data) && data.length > 0) {
-            if (data[0].output) botText = data[0].output;
-            else if (data[0].text) botText = data[0].text;
-            else botText = JSON.stringify(data);
-        } else {
-            botText = JSON.stringify(data);
-        }
-
-        if (!botText || botText === "{}") throw new Error("Empty response content");
-
-        chatState.messages.push({ id: Date.now(), text: botText, sender: 'bot' });
-
-    } catch (error) {
-        console.log("Webhook failed, using fallback", error);
-        await new Promise(r => setTimeout(r, 800));
-        const fallback = getFallbackResponse(text);
-        chatState.messages.push({ id: Date.now(), text: fallback, sender: 'bot' });
-    } finally {
-        chatState.loading = false;
-        updateInputState(false);
-        renderChat();
-        updateQuotaDisplay();
-
-        if (inputMain && window.innerWidth > 768) {
-            inputMain.focus();
-        }
-    }
-}
-
-function handleChatSubmit(e) {
-    e.preventDefault();
-    const val = document.getElementById('chat-input-main').value;
-    sendQuery(val);
-}
 
 // --- 滾動控制 ---
 function scrollToId(id) {
@@ -349,28 +81,7 @@ function toggleMenu() {
     menu.classList.toggle('hidden');
 }
 
-// Intersection Observer (Floating Visibility)
-document.addEventListener("DOMContentLoaded", function () {
-    const chatForm = document.getElementById('chat-form-main');
-    if (chatForm) {
-        chatForm.addEventListener('submit', handleChatSubmit);
-    }
 
-    const observer = new IntersectionObserver(([entry]) => {
-        const floatContainer = document.getElementById('floating-chat-container');
-        if (!entry.isIntersecting) {
-            floatContainer.classList.remove('hidden');
-        } else {
-            floatContainer.classList.add('hidden');
-        }
-    }, { threshold: 0.1 });
-
-    const target = document.getElementById('solutions');
-    if (target) observer.observe(target);
-
-    renderChat();
-    updateQuotaDisplay();
-});
 
 // --- Modal Logic ---
 let currentScale = 1;
@@ -379,7 +90,7 @@ let isMobileAppMode = false;
 
 function openModal(url, mobileMode = false) {
     if (!url || typeof url !== 'string') return;
-    
+
     isMobileAppMode = mobileMode;
 
     const modal = document.getElementById('iframe-modal');
@@ -391,6 +102,7 @@ function openModal(url, mobileMode = false) {
 
     iframe.src = freshUrl;
     modal.classList.remove('hidden');
+    modal.style.display = 'block'; // 強制顯示，抵抗 CMS css 覆蓋
 
     calculateModalLayout();
     window.addEventListener('resize', calculateModalLayout);
@@ -400,6 +112,7 @@ function closeModal() {
     const modal = document.getElementById('iframe-modal');
     const iframe = document.getElementById('content-iframe');
     modal.classList.add('hidden');
+    modal.style.display = 'none'; // 強制隱藏
     iframe.src = '';
     isMobileAppMode = false;
     window.removeEventListener('resize', calculateModalLayout);
@@ -421,7 +134,7 @@ function calculateModalLayout() {
         const scaleW = (w * 0.95) / 414;
         const scaleH = (h * 0.95) / 896;
         currentScale = Math.min(scaleW, scaleH, 1); // 不要放大超過原比例
-        
+
         container.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
         return;
     }
@@ -431,7 +144,7 @@ function calculateModalLayout() {
 
     const baseWidth = 1440;
     const baseHeight = 900;
-    
+
     container.style.width = '1440px';
     container.style.height = '900px';
     container.style.borderRadius = '12px';

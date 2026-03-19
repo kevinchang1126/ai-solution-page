@@ -9,15 +9,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
     <link rel="stylesheet" href="style.css">
+
+    <!-- 覆蓋外部注入外掛的 z-index，確保 nav 永遠在最上層 -->
+    <style>
+        /* 強制壓低娜娜外掛所有元素層級 */
+        #nana-plugin-root,
+        .nana-float-wrapper,
+        .nana-chat-box,
+        .nana-modal-overlay {
+            z-index: 9000 !important;
+        }
+
+        /* 只有娜娜的全螢幕遮罩允許稍高一點，但仍在 nav 之下 */
+        .nana-modal-overlay.active {
+            z-index: 9800 !important;
+        }
+
+        .nana-modal-close-btn {
+            z-index: 9801 !important;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="iframe-modal" class="fixed inset-0 z-[9999] hidden modal-enter">
+    <div id="iframe-modal" class="fixed inset-0 hidden modal-enter" style="z-index: 2147483647 !important;">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity cursor-pointer"
             onclick="closeModal()"></div>
 
-        <button onclick="closeModal()"
-            class="fixed top-5 right-5 z-[10001] p-2 text-white hover:text-cyan-400 bg-black/50 hover:bg-black/70 rounded-full transition-all backdrop-blur-sm border border-white/20 shadow-lg">
+        <button onclick="closeModal()" style="z-index: 2147483647 !important;"
+            class="fixed top-5 right-5 p-2 text-white hover:text-cyan-400 bg-black/50 hover:bg-black/70 rounded-full transition-all backdrop-blur-sm border border-white/20 shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -33,7 +53,8 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100 text-slate-800">
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md border-b border-slate-100 text-slate-800"
+        style="z-index: 2147483635 !important;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <a href="https://www.digiwin.com/tw" target="_blank"
@@ -824,10 +845,9 @@
                         class="w-full max-w-[360px] h-[650px] shadow-2xl rounded-[32px] overflow-hidden border-[8px] border-slate-100 bg-white relative">
                         <!-- mockup.js 將掛載於此 -->
                         <style>
-                            /* 強制顯示切換標籤讓使用者可以在網頁直接互動，取代原本預設的隱藏 */
+                            /* 強制隱藏原本的切換標籤 */
                             #mockup-container .mk-scenario-tabs {
-                                display: flex !important;
-                                margin-bottom: 0;
+                                display: none !important;
                             }
                         </style>
                     </div>
@@ -849,11 +869,106 @@
                             class="px-3 py-1 bg-sky-50 text-sky-700 border border-sky-100 rounded-full font-medium">物料控管</span>
                     </div>
 
-                    <p class="text-lg text-slate-600 leading-relaxed text-justify">
+                    <p class="text-lg text-slate-600 leading-relaxed text-justify mb-10">
                         以企業系統數據資料為基底，使用者下達任務給數智分身，數智分身理解需求，並自主調度資源完成任務，數智分身每次執行的任務
                         <span class="font-bold text-blue-600">可檢核、可解釋、可信賴</span>，
                         任務關鍵決策再交由人員檢核放行，讓人不再埋首複雜的執行工作，有感提升企業營運競爭力。
                     </p>
+
+                    <!-- 場景引導標題 -->
+                    <h4 class="text-xl font-bold text-slate-800 mb-5 relative flex items-center">
+                        <span class="w-2 h-6 bg-blue-500 rounded-full mr-3"></span>
+                        面對這些場景，<span class="text-blue-600 mx-1 border-b-2 border-blue-400">數智分身</span>如何運作
+                    </h4>
+
+                    <!-- 三大場景切換按鈕 -->
+                    <div class="flex flex-col gap-4">
+                        <!-- 第一個場景 -->
+                        <div onclick="switchMockupScenario(0)" id="scen-btn-0" role="button" tabindex="0"
+                            class="mockup-scenario-btn w-full text-left p-4 rounded-xl border-2 transition-all flex items-center gap-4 border-blue-600 bg-blue-50 cursor-pointer shadow-sm focus:outline-none">
+                            <div
+                                class="w-12 h-12 rounded-full bg-white text-blue-600 border border-blue-200 shadow-sm flex items-center justify-center text-xl shrink-0 transition-colors">
+                                📋</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-blue-900 mb-1 transition-colors">接單評估</h4>
+                                <p class="text-sm text-slate-600 transition-colors">辨識圖檔、確認信用、推估交期，一氣呵成</p>
+                            </div>
+                        </div>
+
+                        <!-- 第二個場景 -->
+                        <div onclick="switchMockupScenario(1)" id="scen-btn-1" role="button" tabindex="0"
+                            class="mockup-scenario-btn w-full text-left p-4 rounded-xl border-2 transition-all flex items-center gap-4 border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer focus:outline-none">
+                            <div
+                                class="w-12 h-12 rounded-full border border-slate-200 bg-slate-50 text-slate-500 flex items-center justify-center text-xl shrink-0 transition-colors">
+                                🔄</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-700 mb-1 transition-colors">訂單變更</h4>
+                                <p class="text-sm text-slate-500 transition-colors">快速評估庫存、影響範圍與追加費用</p>
+                            </div>
+                        </div>
+
+                        <!-- 第三個場景 -->
+                        <div onclick="switchMockupScenario(2)" id="scen-btn-2" role="button" tabindex="0"
+                            class="mockup-scenario-btn w-full text-left p-4 rounded-xl border-2 transition-all flex items-center gap-4 border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer focus:outline-none">
+                            <div
+                                class="w-12 h-12 rounded-full border border-slate-200 bg-slate-50 text-slate-500 flex items-center justify-center text-xl shrink-0 transition-colors">
+                                ⚡</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-700 mb-1 transition-colors">急單判斷</h4>
+                                <p class="text-sm text-slate-500 transition-colors">緊急盤點產能備料與試算加急費用</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 切換邏輯 -->
+                    <script>
+                        function switchMockupScenario(index) {
+                            if (typeof MockupApp === 'undefined') return;
+
+                            // 更新 mockup.js 內部狀態
+                            if (MockupApp.currentScenario !== index) {
+                                MockupApp.currentScenario = index;
+                                MockupApp.currentStep = 0;
+                                MockupApp.renderTabs();
+                                MockupApp.renderAll();
+                            }
+
+                            // 更新按鈕樣式
+                            document.querySelectorAll('.mockup-scenario-btn').forEach((btn, i) => {
+                                const iconDiv = btn.querySelector('div.w-12');
+                                const title = btn.querySelector('h4');
+                                const desc = btn.querySelector('p');
+
+                                if (i === index) {
+                                    // Active state
+                                    btn.classList.add('border-blue-600', 'bg-blue-50', 'shadow-sm');
+                                    btn.classList.remove('border-slate-200', 'bg-white', 'hover:border-slate-300', 'hover:bg-slate-50');
+
+                                    iconDiv.classList.add('bg-white', 'text-blue-600', 'border-blue-200', 'shadow-sm');
+                                    iconDiv.classList.remove('bg-slate-50', 'text-slate-500', 'border-slate-200');
+
+                                    title.classList.add('text-blue-900');
+                                    title.classList.remove('text-slate-700');
+
+                                    desc.classList.add('text-slate-600');
+                                    desc.classList.remove('text-slate-500');
+                                } else {
+                                    // Inactive state
+                                    btn.classList.remove('border-blue-600', 'bg-blue-50', 'shadow-sm');
+                                    btn.classList.add('border-slate-200', 'bg-white', 'hover:border-slate-300', 'hover:bg-slate-50');
+
+                                    iconDiv.classList.remove('bg-white', 'text-blue-600', 'border-blue-200', 'shadow-sm');
+                                    iconDiv.classList.add('bg-slate-50', 'text-slate-500', 'border-slate-200');
+
+                                    title.classList.remove('text-blue-900');
+                                    title.classList.add('text-slate-700');
+
+                                    desc.classList.remove('text-slate-600');
+                                    desc.classList.add('text-slate-500');
+                                }
+                            });
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -907,6 +1022,7 @@
 
     <script src="mockup.js"></script>
     <script src="script.js"></script>
+    <script src="floating_nana.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // 初始化 mockup 元件
