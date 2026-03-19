@@ -449,7 +449,7 @@
         }
     }
 
-    .hidden {
+    #nana-plugin-root .hidden {
         display: none !important;
     }
     `;
